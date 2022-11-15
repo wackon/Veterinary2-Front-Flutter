@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Icons.call,
                       color: Colors.white,
                     ),
-                    onPressed: () => launch("tel://+573134684587"),
+                    onPressed: () => launch("tel://+573000000"),
                   ),
                 ),
               )
@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text('Enviar mensaje al taller'),
+              Text('Contactar!'),
               SizedBox(
                 width: 10,
               ),

@@ -127,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _showRememberme() {
     return CheckboxListTile(
-      title: Text('Recordarme'),
+      title: Text('Recordarme!!'),
       value: _rememberme,
       onChanged: (value) {
         setState(() {
@@ -164,7 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith<Color>(
               (Set<MaterialState> states) {
-            return Color(0xFF120E43);
+            return Color.fromARGB(255, 30, 141, 54);
           }),
         ),
         onPressed: () => _login(),
@@ -179,7 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith<Color>(
               (Set<MaterialState> states) {
-            return Color(0xFFE03B8B);
+            return Color(0xFF3023E4);
           }),
         ),
         onPressed: () => _register(),

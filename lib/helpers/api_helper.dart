@@ -23,7 +23,7 @@ import 'constans.dart';
 class ApiHelper {
   static var list;
 
-  static Future<Response> getVehicle(Token token, String id) async {
+  static Future<Response> getMascota(Token token, String id) async {
     if (!_validToken(token)) {
       return Response(
           isSuccess: false,
@@ -31,7 +31,7 @@ class ApiHelper {
               'Sus credenciales se han vencido, por favor cierre sesión y vuelva a ingresar al sistema.');
     }
 
-    var url = Uri.parse('${Constans.apiUrl}/api/Vehicles/$id');
+    var url = Uri.parse('${Constans.apiUrl}/api/mascota/$id');
     var response = await http.get(
       url,
       headers: {

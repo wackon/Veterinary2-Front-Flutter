@@ -1,3 +1,3 @@
 class Constans {
-  static String get apiUrl => 'https://mechanicshop.azurewebsites.net/';
+  static String get apiUrl => 'https://veterinaty.azurewebsites.net/';
 }
