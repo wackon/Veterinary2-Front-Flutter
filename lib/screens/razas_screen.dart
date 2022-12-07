@@ -4,22 +4,22 @@ import 'package:flutter/material.dart';
 
 import 'package:veterinary1/components/loader_component.dart';
 import 'package:veterinary1/helpers/api_helper.dart';
-import 'package:veterinary1/models/mascota.dart';
+import 'package:veterinary1/models/raza.dart';
 import 'package:veterinary1/models/response.dart';
 import 'package:veterinary1/models/token.dart';
-import 'package:veterinary1/screens/mascota_screen.dart';
+import 'package:veterinary1/screens/raza_screen.dart';
 
-class MascotasScreen extends StatefulWidget {
+class RazasScreen extends StatefulWidget {
   final Token token;
 
-  MascotasScreen({required this.token});
+  RazasScreen({required this.token});
 
   @override
-  _MascotasScreenState createState() => _MascotasScreenState();
+  _RazasScreenState createState() => _RazasScreenState();
 }
 
-class _MascotasScreenState extends State<MascotasScreen> {
-  List<Mascota> _mascotas = [];
+class _RazasScreenState extends State<RazasScreen> {
+  List<Raza> _razas = [];
   bool _showLoader = false;
   bool _isFiltered = false;
   String _search = '';
@@ -27,14 +27,14 @@ class _MascotasScreenState extends State<MascotasScreen> {
   @override
   void initState() {
     super.initState();
-    _getMascotas();
+    _getRazas();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Mascotas'),
+        title: Text('razas'),
         actions: <Widget>[
           _isFiltered
               ? IconButton(
@@ -54,7 +54,7 @@ class _MascotasScreenState extends State<MascotasScreen> {
     );
   }
 
-  Future<Null> _getMascotas() async {
+  Future<Null> _getRazas() async {
     setState(() {
       _showLoader = true;
     });
@@ -74,7 +74,7 @@ class _MascotasScreenState extends State<MascotasScreen> {
       return;
     }
 
-    Response response = await ApiHelper.getMascotas(widget.token);
+    Response response = await ApiHelper.getRazas(widget.token);
 
     setState(() {
       _showLoader = false;
@@ -92,12 +92,12 @@ class _MascotasScreenState extends State<MascotasScreen> {
     }
 
     setState(() {
-      _mascotas = response.result;
+      _razas = response.result;
     });
   }
 
   Widget _getContent() {
-    return _mascotas.length == 0 ? _noContent() : _getListView();
+    return _razas.length == 0 ? _noContent() : _getListView();
   }
 
   Widget _noContent() {
@@ -106,8 +106,8 @@ class _MascotasScreenState extends State<MascotasScreen> {
         margin: EdgeInsets.all(20),
         child: Text(
           _isFiltered
-              ? 'No hay mascotas con ese criterio de búsqueda.'
-              : 'No hay mascotas registradas.',
+              ? 'No hay marcas con ese criterio de búsqueda.'
+              : 'No hay marcas registradas.',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
@@ -116,9 +116,9 @@ class _MascotasScreenState extends State<MascotasScreen> {
 
   Widget _getListView() {
     return RefreshIndicator(
-      onRefresh: _getMascotas,
+      onRefresh: _getRazas,
       child: ListView(
-        children: _mascotas.map((e) {
+        children: _razas.map((e) {
           return Card(
             child: InkWell(
               onTap: () => _goEdit(e),
@@ -131,7 +131,7 @@ class _MascotasScreenState extends State<MascotasScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          e.nombre,
+                          e.descripcion,
                           style: TextStyle(
                             fontSize: 20,
                           ),
@@ -157,11 +157,11 @@ class _MascotasScreenState extends State<MascotasScreen> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            title: Text('Filtrar Mascotas'),
+            title: Text('Filtrar Razas'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text('Escriba las primeras letras de la mascota'),
+                Text('Escriba las primeras letras de la raza'),
                 SizedBox(
                   height: 10,
                 ),
@@ -190,7 +190,7 @@ class _MascotasScreenState extends State<MascotasScreen> {
     setState(() {
       _isFiltered = false;
     });
-    _getMascotas();
+    _getRazas();
   }
 
   void _filter() {
@@ -198,15 +198,15 @@ class _MascotasScreenState extends State<MascotasScreen> {
       return;
     }
 
-    List<Mascota> filteredList = [];
-    for (var mascota in _mascotas) {
-      if (mascota.nombre.toLowerCase().contains(_search.toLowerCase())) {
-        filteredList.add(mascota);
+    List<Raza> filteredList = [];
+    for (var raza in _razas) {
+      if (raza.descripcion.toLowerCase().contains(_search.toLowerCase())) {
+        filteredList.add(raza);
       }
     }
 
     setState(() {
-      _mascotas = filteredList;
+      _razas = filteredList;
       _isFiltered = true;
     });
 
@@ -217,25 +217,25 @@ class _MascotasScreenState extends State<MascotasScreen> {
     String? result = await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => MascotaScreen(
+            builder: (context) => RazaScreen(
                   token: widget.token,
-                  mascota: Mascota(nombre: '', id: 0, tipoMascota: null),
+                  raza: Raza(descripcion: '', id: 0),
                 )));
     if (result == 'yes') {
-      _getMascotas();
+      _getRazas();
     }
   }
 
-  void _goEdit(Mascota mascota) async {
+  void _goEdit(Raza raza) async {
     String? result = await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => MascotaScreen(
+            builder: (context) => RazaScreen(
                   token: widget.token,
-                  mascota: mascota,
+                  raza: raza,
                 )));
     if (result == 'yes') {
-      _getMascotas();
+      _getRazas();
     }
   }
 }

@@ -12,7 +12,7 @@ import 'package:veterinary1/models/vehicle.dart';
 import 'package:veterinary1/models/vehicle_type.dart';
 
 import '../models/brand.dart';
-import '../models/document_type.dart';
+import '../models/raza.dart';
 import '../models/history.dart';
 import '../models/response.dart';
 import '../models/user.dart';
@@ -23,7 +23,7 @@ import 'constans.dart';
 class ApiHelper {
   static var list;
 
-  static Future<Response> getMascota(Token token, String id) async {
+  static Future<Response> getMascotas(Token token) async {
     if (!_validToken(token)) {
       return Response(
           isSuccess: false,
@@ -31,7 +31,7 @@ class ApiHelper {
               'Sus credenciales se han vencido, por favor cierre sesión y vuelva a ingresar al sistema.');
     }
 
-    var url = Uri.parse('${Constans.apiUrl}/api/mascota/$id');
+    var url = Uri.parse('${Constans.apiUrl}/api/mascota');
     var response = await http.get(
       url,
       headers: {
@@ -46,8 +46,15 @@ class ApiHelper {
       return Response(isSuccess: false, message: body);
     }
 
+    List<Mascota> list = [];
     var decodedJson = jsonDecode(body);
-    return Response(isSuccess: true, result: Vehicle.fromJson(decodedJson));
+    if (decodedJson != null) {
+      for (var item in decodedJson) {
+        list.add(Mascota.fromJson(item));
+      }
+    }
+
+    return Response(isSuccess: true, result: list);
   }
 
   static Future<Response> getHistory(Token token, String id) async {
@@ -131,6 +138,40 @@ class ApiHelper {
     if (decodedJson != null) {
       for (var item in decodedJson) {
         list.add(Brand.fromJson(item));
+      }
+    }
+
+    return Response(isSuccess: true, result: list);
+  }
+
+  static Future<Response> getRazas(Token token) async {
+    if (!_validToken(token)) {
+      return Response(
+          isSuccess: false,
+          message:
+              'Sus credenciales se han vencido, por favor cierre sesión y vuelva a ingresar al sistema.');
+    }
+
+    var url = Uri.parse('${Constans.apiUrl}/api/raza');
+    var response = await http.get(
+      url,
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json',
+        'authorization': 'bearer ${token.token}',
+      },
+    );
+
+    var body = response.body;
+    if (response.statusCode >= 400) {
+      return Response(isSuccess: false, message: body);
+    }
+
+    List<Raza> list = [];
+    var decodedJson = jsonDecode(body);
+    if (decodedJson != null) {
+      for (var item in decodedJson) {
+        list.add(Raza.fromJson(item));
       }
     }
 

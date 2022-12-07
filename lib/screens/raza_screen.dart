@@ -4,43 +4,42 @@ import 'package:flutter/material.dart';
 
 import 'package:veterinary1/components/loader_component.dart';
 import 'package:veterinary1/helpers/api_helper.dart';
-import 'package:veterinary1/models/mascota.dart';
+import 'package:veterinary1/models/raza.dart';
 import 'package:veterinary1/models/response.dart';
 import 'package:veterinary1/models/token.dart';
 import 'package:veterinary1/screens/home_screen.dart';
 
-class MascotaScreen extends StatefulWidget {
+class RazaScreen extends StatefulWidget {
   final Token token;
-  final Mascota mascota;
+  final Raza raza;
 
-  MascotaScreen({required this.token, required this.mascota});
+  RazaScreen({required this.token, required this.raza});
 
   @override
-  _MascotaScreenState createState() => _MascotaScreenState();
+  _RazaScreenState createState() => _RazaScreenState();
 }
 
-class _MascotaScreenState extends State<MascotaScreen> {
+class _RazaScreenState extends State<RazaScreen> {
   bool _showLoader = false;
 
   String _description = '';
-  String _nombre = '';
   String _descriptionError = '';
   bool _descriptionShowError = false;
-  TextEditingController _nombreController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _nombre = widget.mascota.nombre;
-    _nombreController.text = _nombre;
+    _description = widget.raza.descripcion;
+    _descriptionController.text = _description;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-            widget.mascota.id == 0 ? 'Nueva Mascota' : widget.mascota.nombre),
+        title:
+            Text(widget.raza.id == 0 ? 'Nuevo raza' : widget.raza.descripcion),
       ),
       body: Stack(
         children: <Widget>[
@@ -64,9 +63,9 @@ class _MascotaScreenState extends State<MascotaScreen> {
     return Container(
       padding: EdgeInsets.all(10),
       child: TextField(
-        controller: _nombreController,
+        controller: _descriptionController,
         decoration: InputDecoration(
-          hintText: 'Ingresa una nombre...',
+          hintText: 'Ingresa una raza...',
           labelText: 'Descripción',
           errorText: _descriptionShowError ? _descriptionError : null,
           suffixIcon: Icon(Icons.description),
@@ -97,12 +96,12 @@ class _MascotaScreenState extends State<MascotaScreen> {
               onPressed: () => _save(),
             ),
           ),
-          widget.mascota.id == 0
+          widget.raza.id == 0
               ? Container()
               : SizedBox(
                   width: 20,
                 ),
-          widget.mascota.id == 0
+          widget.raza.id == 0
               ? Container()
               : Expanded(
                   child: ElevatedButton(
@@ -126,7 +125,7 @@ class _MascotaScreenState extends State<MascotaScreen> {
       return;
     }
 
-    widget.mascota.id == 0 ? _addRecord() : _saveRecord();
+    widget.raza.id == 0 ? _addRecord() : _saveRecord();
   }
 
   bool _validateFields() {
@@ -169,7 +168,7 @@ class _MascotaScreenState extends State<MascotaScreen> {
     };
 
     Response response =
-        await ApiHelper.post('/api/mascota/', request, widget.token);
+        await ApiHelper.post('/api/raza/', request, widget.token);
 
     setState(() {
       _showLoader = false;
@@ -210,12 +209,12 @@ class _MascotaScreenState extends State<MascotaScreen> {
     }
 
     Map<String, dynamic> request = {
-      'id': widget.mascota.id,
+      'id': widget.raza.id,
       'description': _description,
     };
 
     Response response = await ApiHelper.put(
-        '/api/mascota/', widget.mascota.id.toString(), request, widget.token);
+        '/api/raza/', widget.raza.id.toString(), request, widget.token);
 
     setState(() {
       _showLoader = false;
@@ -271,7 +270,7 @@ class _MascotaScreenState extends State<MascotaScreen> {
     }
 
     Response response = await ApiHelper.delete(
-        '/api/mascota/', widget.mascota.id.toString(), widget.token);
+        '/api/raza/', widget.raza.id.toString(), widget.token);
 
     setState(() {
       _showLoader = false;

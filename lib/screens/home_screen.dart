@@ -12,7 +12,8 @@ import 'package:veterinary1/screens/procedures_screen.dart';
 
 import 'package:veterinary1/screens/vehicle_types_screen.dart';
 import 'package:whatsapp_unilink/whatsapp_unilink.dart';
-import 'brands_screen.dart';
+import 'Mascotas_screen.dart';
+import 'razas_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final Token token;
@@ -28,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Machine Shop'),
+          title: Text('Veterinary Clinic'),
         ),
         body: _getBody(),
         drawer: _getMenu());
@@ -44,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
             borderRadius: BorderRadius.circular(150),
             // ignore: sort_child_properties_last
             child: Image(
-              image: AssetImage('images/logot.jpg'),
+              image: AssetImage('images/home.png'),
               width: 300,
               fit: BoxFit.fill,
             ),
@@ -64,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text('Llamar a Machine Shop'),
+              Text('Llamar a Veterinary'),
               SizedBox(
                 width: 10,
               ),
@@ -124,16 +125,28 @@ class _HomeScreenState extends State<HomeScreen> {
         children: <Widget>[
           DrawerHeader(
               child: Image(
-            image: AssetImage('images/logo.png'),
+            image: AssetImage('images/logoIngreso.jpg'),
           )),
           ListTile(
-            leading: Icon(Icons.two_wheeler),
-            title: const Text('Marcas'),
+            leading: Icon(Icons.pets),
+            title: const Text('Mascota'),
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => BrandsScreen(
+                      builder: (context) => MascotasScreen(
+                            token: widget.token,
+                          )));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.type_specimen),
+            title: const Text('Razas'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => RazasScreen(
                             token: widget.token,
                           )));
             },
@@ -156,8 +169,8 @@ class _HomeScreenState extends State<HomeScreen> {
             onTap: () {},
           ),
           ListTile(
-            leading: Icon(Icons.toys),
-            title: const Text('Tipo vehicle'),
+            leading: Icon(Icons.pets),
+            title: const Text('Tipo Mascota'),
             onTap: () {},
           ),
           Divider(
@@ -176,8 +189,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _sendMessage() async {
     final link = WhatsAppUnilink(
-      phoneNumber: '+573134682688',
-      text: 'Hola soy ${widget.token.user.fullName} cliente del taller',
+      phoneNumber: '+573000000000',
+      text: 'Hola soy ${widget.token.user.fullName} cliente de la Clínica',
     );
     await launch('$link');
   }

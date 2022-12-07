@@ -1,12 +1,18 @@
 class Raza {
-  String? descripciN;
+  int id = 0;
+  String descripcion = '';
   int? idMascota;
   Mascota? mascota;
 
-  Raza({this.descripciN, this.idMascota, this.mascota});
+  Raza(
+      {required this.id,
+      required this.descripcion,
+      this.idMascota,
+      this.mascota});
 
   Raza.fromJson(Map<String, dynamic> json) {
-    descripciN = json['descripción'];
+    id = json['id'];
+    descripcion = json['descripcion'];
     idMascota = json['idMascota'];
     mascota =
         json['mascota'] != null ? new Mascota.fromJson(json['mascota']) : null;
@@ -14,7 +20,8 @@ class Raza {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['descripción'] = this.descripciN;
+    data['id'] = this.id;
+    data['descripcion'] = this.descripcion;
     data['idMascota'] = this.idMascota;
     if (this.mascota != null) {
       data['mascota'] = this.mascota!.toJson();

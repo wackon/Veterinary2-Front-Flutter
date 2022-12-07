@@ -1,18 +1,21 @@
 class Mascota {
-  String? nombre;
+  int id = 0;
+  String nombre = '';
   int? edad;
   String? fechaNacimiento;
   int? idTipoMascota;
   TipoMascota? tipoMascota;
 
   Mascota(
-      {this.nombre,
+      {required this.id,
+      required this.nombre,
       this.edad,
       this.fechaNacimiento,
       this.idTipoMascota,
-      this.tipoMascota});
+      required this.tipoMascota});
 
   Mascota.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     nombre = json['nombre'];
     edad = json['edad'];
     fechaNacimiento = json['fechaNacimiento'];
@@ -24,6 +27,7 @@ class Mascota {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['nombre'] = this.nombre;
     data['edad'] = this.edad;
     data['fechaNacimiento'] = this.fechaNacimiento;
