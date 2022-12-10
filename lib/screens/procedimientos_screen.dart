@@ -1,25 +1,28 @@
+/* // ignore_for_file: depend_on_referenced_packages
+
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:veterinary1/components/loader_component.dart';
 import 'package:veterinary1/helpers/api_helper.dart';
+import 'package:veterinary1/models/procedimiento.dart';
 import 'package:veterinary1/models/response.dart';
 import 'package:veterinary1/models/token.dart';
-import 'package:veterinary1/models/vehicle_type.dart';
-import 'package:veterinary1/screens/vehicle_type_screen.dart';
+import 'package:veterinary1/screens/procedimiento_screen.dart';
 
-class VehicleTypesScreen extends StatefulWidget {
+class ProcedimientosScreen extends StatefulWidget {
   final Token token;
 
-  VehicleTypesScreen({required this.token});
+  ProcedimientosScreen({required this.token});
 
   @override
-  _VehicleTypesScreenState createState() => _VehicleTypesScreenState();
+  _ProcedimientosScreenState createState() => _ProcedimientosScreenState();
 }
 
-class _VehicleTypesScreenState extends State<VehicleTypesScreen> {
-  List<VehicleType> _vehicleTypes = [];
+class _ProcedimientosScreenState extends State<ProcedimientosScreen> {
+  List<Procedimiento> _procedimientos = [];
   bool _showLoader = false;
   bool _isFiltered = false;
   String _search = '';
@@ -27,14 +30,14 @@ class _VehicleTypesScreenState extends State<VehicleTypesScreen> {
   @override
   void initState() {
     super.initState();
-    _getVehicleTypes();
+    _getProcedimientos();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tipos de vehículo'),
+        title: Text('Procedimientos'),
         actions: <Widget>[
           _isFiltered
               ? IconButton(
@@ -54,7 +57,7 @@ class _VehicleTypesScreenState extends State<VehicleTypesScreen> {
     );
   }
 
-  Future<Null> _getVehicleTypes() async {
+  Future<Null> _getProcedimientos() async {
     setState(() {
       _showLoader = true;
     });
@@ -74,7 +77,7 @@ class _VehicleTypesScreenState extends State<VehicleTypesScreen> {
       return;
     }
 
-    Response response = await ApiHelper.getVehicleTypes(widget.token);
+    Response response = await ApiHelper._getProcedimientos(widget.token);
 
     setState(() {
       _showLoader = false;
@@ -92,12 +95,12 @@ class _VehicleTypesScreenState extends State<VehicleTypesScreen> {
     }
 
     setState(() {
-      _vehicleTypes = response.result;
+      _procedimientos = response.result;
     });
   }
 
   Widget _getContent() {
-    return _vehicleTypes.length == 0 ? _noContent() : _getListView();
+    return _procedimientos.length == 0 ? _noContent() : _getListView();
   }
 
   Widget _noContent() {
@@ -106,8 +109,8 @@ class _VehicleTypesScreenState extends State<VehicleTypesScreen> {
         margin: EdgeInsets.all(20),
         child: Text(
           _isFiltered
-              ? 'No hay tipos de vehículo con ese criterio de búsqueda.'
-              : 'No hay tipos de vehículo registrados.',
+              ? 'No hay procedimientos con ese criterio de búsqueda.'
+              : 'No hay procedimientos registrados.',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),
@@ -116,9 +119,9 @@ class _VehicleTypesScreenState extends State<VehicleTypesScreen> {
 
   Widget _getListView() {
     return RefreshIndicator(
-      onRefresh: _getVehicleTypes,
+      onRefresh: _getProcedimientos,
       child: ListView(
-        children: _vehicleTypes.map((e) {
+        children: _procedimientos.map((e) {
           return Card(
             child: InkWell(
               onTap: () => _goEdit(e),
@@ -131,7 +134,7 @@ class _VehicleTypesScreenState extends State<VehicleTypesScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          e.description,
+                          e.nombreProcedimiento,
                           style: TextStyle(
                             fontSize: 20,
                           ),
@@ -139,6 +142,19 @@ class _VehicleTypesScreenState extends State<VehicleTypesScreen> {
                         Icon(Icons.arrow_forward_ios),
                       ],
                     ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    /* Row(
+                      children: [
+                        Text(
+                          '${NumberFormat.currency(symbol: '\$').format(e.price)}',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ), */
                   ],
                 ),
               ),
@@ -157,11 +173,11 @@ class _VehicleTypesScreenState extends State<VehicleTypesScreen> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            title: Text('Filtrar Tipos de Vehículo'),
+            title: Text('Filtrar Procedimientos'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text('Escriba las primeras letras del tipo de vehículo'),
+                Text('Escriba las primeras letras del procedimiento'),
                 SizedBox(
                   height: 10,
                 ),
@@ -190,7 +206,7 @@ class _VehicleTypesScreenState extends State<VehicleTypesScreen> {
     setState(() {
       _isFiltered = false;
     });
-    _getVehicleTypes();
+    _getProcedimientos();
   }
 
   void _filter() {
@@ -198,17 +214,17 @@ class _VehicleTypesScreenState extends State<VehicleTypesScreen> {
       return;
     }
 
-    List<VehicleType> filteredList = [];
-    for (var vehicleType in _vehicleTypes) {
-      if (vehicleType.description
+    List<Procedimiento> filteredList = [];
+    for (var procedimiento in _procedimientos) {
+      if (procedimiento.nombreProcedimiento
           .toLowerCase()
           .contains(_search.toLowerCase())) {
-        filteredList.add(vehicleType);
+        filteredList.add(procedimiento);
       }
     }
 
     setState(() {
-      _vehicleTypes = filteredList;
+      _procedimientos = filteredList;
       _isFiltered = true;
     });
 
@@ -219,25 +235,26 @@ class _VehicleTypesScreenState extends State<VehicleTypesScreen> {
     String? result = await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => VehicleTypeScreen(
+            builder: (context) => ProcedimientoScreen(
                   token: widget.token,
-                  vehicleType: VehicleType(description: '', id: 0),
+                  procedimiento: Procedimiento(nombreProcedimiento: '', id: 0),
                 )));
     if (result == 'yes') {
-      _getVehicleTypes();
+      _getProcedimientos();
     }
   }
 
-  void _goEdit(VehicleType vehicleType) async {
+  void _goEdit(Procedimiento procedimiento) async {
     String? result = await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => VehicleTypeScreen(
+            builder: (context) => ProcedimientosScreen(
                   token: widget.token,
-                  vehicleType: vehicleType,
+                  nombreProcedimiento: nombreProcedimiento,
                 )));
     if (result == 'yes') {
-      _getVehicleTypes();
+      _getProcedimientos();
     }
   }
 }
+ */

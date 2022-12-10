@@ -14,11 +14,10 @@ import 'package:veterinary1/models/vehicle_type.dart';
 import '../models/brand.dart';
 import '../models/raza.dart';
 import '../models/history.dart';
-import '../models/response.dart';
+
 import '../models/user.dart';
 import '../models/vehicle.dart';
 import '../models/vehicle_type.dart';
-import 'constans.dart';
 
 class ApiHelper {
   static var list;
@@ -92,7 +91,33 @@ class ApiHelper {
               'Sus credenciales se han vencido, por favor cierre sesión y vuelva a ingresar al sistema.');
     }
 
-    var url = Uri.parse('${Constans.apiUrl}/api/Procedures');
+    var url = Uri.parse('${Constans.apiUrl}/api/procedimiento');
+    var response = await http.get(
+      url,
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json',
+        'authorization': 'bearer ${token.token}',
+      },
+    );
+
+    var body = response.body;
+    if (response.statusCode >= 400) {
+      return Response(isSuccess: false, message: body);
+    }
+
+    return Response(isSuccess: true, result: list);
+  }
+
+  static Future<Response> getProcedimientos(Token token) async {
+    if (!_validToken(token)) {
+      return Response(
+          isSuccess: false,
+          message:
+              'Sus credenciales se han vencido, por favor cierre sesión y vuelva a ingresar al sistema.');
+    }
+
+    var url = Uri.parse('${Constans.apiUrl}/api/procedimiento');
     var response = await http.get(
       url,
       headers: {

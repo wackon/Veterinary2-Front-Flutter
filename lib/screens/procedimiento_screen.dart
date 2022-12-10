@@ -1,24 +1,24 @@
-import 'package:adaptive_dialog/adaptive_dialog.dart';
+/* import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 
 import 'package:veterinary1/components/loader_component.dart';
 import 'package:veterinary1/helpers/api_helper.dart';
+import 'package:veterinary1/models/procedimiento.dart';
 import 'package:veterinary1/models/response.dart';
 import 'package:veterinary1/models/token.dart';
-import 'package:veterinary1/models/vehicle_type.dart';
 
-class VehicleTypeScreen extends StatefulWidget {
+class ProcedimientoScreen extends StatefulWidget {
   final Token token;
-  final VehicleType vehicleType;
+  final Procedimiento procedimiento;
 
-  VehicleTypeScreen({required this.token, required this.vehicleType});
+  ProcedimientoScreen({required this.token, required this.procedimiento});
 
   @override
-  _VehicleTypeScreenState createState() => _VehicleTypeScreenState();
+  _ProcedimientoScreenState createState() => _ProcedimientoScreenState();
 }
 
-class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
+class _ProcedimientoScreenState extends State<ProcedimientoScreen> {
   bool _showLoader = false;
 
   String _description = '';
@@ -26,26 +26,34 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
   bool _descriptionShowError = false;
   TextEditingController _descriptionController = TextEditingController();
 
+  /* String _price = '';
+  String _priceError = '';
+  bool _priceShowError = false;
+  TextEditingController _priceController = TextEditingController();
+ */
   @override
   void initState() {
     super.initState();
-    _description = widget.vehicleType.description;
+    _description = widget.procedimiento.nombreProcedimiento;
     _descriptionController.text = _description;
+    /*  _price = widget.procedure.price.toString();
+    _priceController.text = _price; */
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.vehicleType.id == 0
-            ? 'Nuevo tipo de vehículo'
-            : widget.vehicleType.description),
+        title: Text(widget.procedimiento.id == 0
+            ? 'Nuevo procedimiento'
+            : widget.procedimiento.nombreProcedimiento),
       ),
       body: Stack(
         children: [
           Column(
             children: <Widget>[
               _showDescription(),
+              /*  _showPrice(), */
               _showButtons(),
             ],
           ),
@@ -78,6 +86,27 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
     );
   }
 
+  /*  Widget _showPrice() {
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: TextField(
+        keyboardType:
+            TextInputType.numberWithOptions(decimal: true, signed: false),
+        controller: _priceController,
+        decoration: InputDecoration(
+          hintText: 'Ingresa un precio...',
+          labelText: 'Precio',
+          errorText: _priceShowError ? _priceError : null,
+          suffixIcon: Icon(Icons.attach_money),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+        onChanged: (value) {
+          _price = value;
+        },
+      ),
+    );
+  } */
+
   Widget _showButtons() {
     return Container(
       margin: EdgeInsets.only(left: 10, right: 10),
@@ -96,12 +125,12 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
               onPressed: () => _save(),
             ),
           ),
-          widget.vehicleType.id == 0
+          widget.procedimiento.id == 0
               ? Container()
               : SizedBox(
                   width: 20,
                 ),
-          widget.vehicleType.id == 0
+          widget.procedimiento.id == 0
               ? Container()
               : Expanded(
                   child: ElevatedButton(
@@ -125,7 +154,7 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
       return;
     }
 
-    widget.vehicleType.id == 0 ? _addRecord() : _saveRecord();
+    widget.procedimiento.id == 0 ? _addRecord() : _saveRecord();
   }
 
   bool _validateFields() {
@@ -138,12 +167,27 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
     } else {
       _descriptionShowError = false;
     }
+/* 
+    if (_price.isEmpty) {
+      isValid = false;
+      _priceShowError = true;
+      _priceError = 'Debes ingresar un precio.';
+    } else {
+      double price = double.parse(_price);
+      if (price <= 0) {
+        isValid = false;
+        _priceShowError = true;
+        _priceError = 'Debes ingresar un precio mayor a cero.';
+      } else {
+        _priceShowError = false;
+      }
+    } */
 
     setState(() {});
     return isValid;
   }
 
-  _addRecord() async {
+  void _addRecord() async {
     setState(() {
       _showLoader = true;
     });
@@ -165,10 +209,11 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
 
     Map<String, dynamic> request = {
       'description': _description,
+      /* 'price': double.parse(_price), */
     };
 
     Response response =
-        await ApiHelper.post('/api/VehicleTypes/', request, widget.token);
+        await ApiHelper.post('/api/procedimiento/', request, widget.token);
 
     setState(() {
       _showLoader = false;
@@ -188,7 +233,7 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
     Navigator.pop(context, 'yes');
   }
 
-  _saveRecord() async {
+  void _saveRecord() async {
     setState(() {
       _showLoader = true;
     });
@@ -209,12 +254,13 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
     }
 
     Map<String, dynamic> request = {
-      'id': widget.vehicleType.id,
+      'id': widget.procedimiento.id,
       'description': _description,
+      /* 'price': double.parse(_price), */
     };
 
-    Response response = await ApiHelper.put('/api/VehicleTypes/',
-        widget.vehicleType.id.toString(), request, widget.token);
+    Response response = await ApiHelper.put('/api/procedimiento/',
+        widget.procedimiento.id.toString(), request, widget.token);
 
     setState(() {
       _showLoader = false;
@@ -269,8 +315,8 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
       return;
     }
 
-    Response response = await ApiHelper.delete(
-        '/api/VehicleTypes/', widget.vehicleType.id.toString(), widget.token);
+    Response response = await ApiHelper.delete('/api/procedimiento/',
+        widget.procedimiento.id.toString(), widget.token);
 
     setState(() {
       _showLoader = false;
@@ -290,3 +336,4 @@ class _VehicleTypeScreenState extends State<VehicleTypeScreen> {
     Navigator.pop(context, 'yes');
   }
 }
+ */

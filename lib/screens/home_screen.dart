@@ -10,7 +10,6 @@ import 'package:veterinary1/models/token.dart';
 import 'package:veterinary1/screens/login_screen.dart';
 import 'package:veterinary1/screens/procedures_screen.dart';
 
-import 'package:veterinary1/screens/vehicle_types_screen.dart';
 import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 import 'Mascotas_screen.dart';
 import 'razas_screen.dart';

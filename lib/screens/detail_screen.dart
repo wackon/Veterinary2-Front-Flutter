@@ -1,4 +1,4 @@
-import 'package:adaptive_dialog/adaptive_dialog.dart';
+/* import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:veterinary1/components/loader_component.dart';
@@ -517,3 +517,4 @@ class _DetailScreenState extends State<DetailScreen> {
     return int.parse(priceString.substring(0, priceString.length - 2));
   }
 }
+ */

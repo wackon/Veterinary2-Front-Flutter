@@ -1,4 +1,4 @@
-import 'package:adaptive_dialog/adaptive_dialog.dart';
+/* import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 import 'package:flutter/material.dart';
@@ -351,3 +351,4 @@ class _HistoryScreenState extends State<HistoryScreen> {
     Navigator.pop(context, 'yes');
   }
 }
+ */
