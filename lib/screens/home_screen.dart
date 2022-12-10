@@ -8,7 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:veterinary1/models/token.dart';
 import 'package:veterinary1/screens/login_screen.dart';
-import 'package:veterinary1/screens/procedures_screen.dart';
+import 'package:veterinary1/screens/procedimientos_screen.dart';
 
 import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 import 'Mascotas_screen.dart';
@@ -150,14 +150,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           )));
             },
           ),
-          ListTile(
+          /*   ListTile(
             leading: Icon(Icons.precision_manufacturing),
             title: const Text('Procedimientos'),
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ProceduresScreen(
+                      builder: (context) => ProcedimientosScreen(
                             token: widget.token,
                           )));
             },
@@ -166,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
             leading: Icon(Icons.badge),
             title: const Text('Tipo documento'),
             onTap: () {},
-          ),
+          ), */
           ListTile(
             leading: Icon(Icons.pets),
             title: const Text('Tipo Mascota'),

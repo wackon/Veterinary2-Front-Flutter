@@ -1,4 +1,4 @@
-import 'package:veterinary1/models/document_type.dart';
+/* import 'package:veterinary1/models/document_type.dart'; */
 
 class User {
   String firstName = '';
@@ -34,7 +34,7 @@ class User {
     required this.countryCode,
     required this.phoneNumber,
     required List vehicles,
-    required DocumentType documentType,
+    /* required DocumentType documentType, */
   });
 
   User.fromJson(Map<String, dynamic> json) {

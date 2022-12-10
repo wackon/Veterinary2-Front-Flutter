@@ -1,4 +1,4 @@
-import 'package:veterinary1/models/document_type.dart';
+/* import 'package:veterinary1/models/document_type.dart'; */
 import 'package:veterinary1/models/user.dart';
 
 class Token {
@@ -8,7 +8,7 @@ class Token {
       firstName: '',
       lastName: '',
       id: '',
-      documentType: DocumentType(id: 0, description: ''),
+      /* documentType: DocumentType(id: 0, description: ''), */
       userName: '',
       email: '',
       phoneNumber: '',

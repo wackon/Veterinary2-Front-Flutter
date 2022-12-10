@@ -4,20 +4,14 @@ import 'package:veterinary1/models/token.dart';
 
 import 'package:veterinary1/helpers/constans.dart';
 import 'package:veterinary1/models/brand.dart';
-import 'package:veterinary1/models/document_type.dart';
 
 import 'package:veterinary1/models/response.dart';
 import 'package:veterinary1/models/user.dart';
-import 'package:veterinary1/models/vehicle.dart';
-import 'package:veterinary1/models/vehicle_type.dart';
 
 import '../models/brand.dart';
 import '../models/raza.dart';
-import '../models/history.dart';
 
 import '../models/user.dart';
-import '../models/vehicle.dart';
-import '../models/vehicle_type.dart';
 
 class ApiHelper {
   static var list;
@@ -56,7 +50,7 @@ class ApiHelper {
     return Response(isSuccess: true, result: list);
   }
 
-  static Future<Response> getHistory(Token token, String id) async {
+  /*  static Future<Response> getHistory(Token token, String id) async {
     if (!_validToken(token)) {
       return Response(
           isSuccess: false,
@@ -81,7 +75,7 @@ class ApiHelper {
 
     var decodedJson = jsonDecode(body);
     return Response(isSuccess: true, result: History.fromJson(decodedJson));
-  }
+  } */
 
   static Future<Response> getProcedures(Token token) async {
     if (!_validToken(token)) {
@@ -203,7 +197,7 @@ class ApiHelper {
     return Response(isSuccess: true, result: list);
   }
 
-  static Future<Response> getDocumentTypes() async {
+  /*  static Future<Response> getDocumentTypes() async {
     var url = Uri.parse('${Constans.apiUrl}/api/DocumentTypes');
     var response = await http.get(
       url,
@@ -227,9 +221,9 @@ class ApiHelper {
     }
 
     return Response(isSuccess: true, result: list);
-  }
+  } */
 
-  static Future<Response> getVehicleTypes(Token token) async {
+  /*  static Future<Response> getVehicleTypes(Token token) async {
     if (!_validToken(token)) {
       return Response(
           isSuccess: false,
@@ -261,7 +255,7 @@ class ApiHelper {
     }
 
     return Response(isSuccess: true, result: list);
-  }
+  } */
 
   static Future<Response> getUsers(Token token) async {
     if (!_validToken(token)) {
