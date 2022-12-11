@@ -14,7 +14,7 @@ class LoaderComponent extends StatelessWidget {
         width: 200,
         height: 100,
         decoration: BoxDecoration(
-          color: Color(0xFF3E2775),
+          color: Color.fromARGB(255, 70, 51, 114),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(color: Colors.black),
         ),
@@ -27,7 +27,7 @@ class LoaderComponent extends StatelessWidget {
             ),
             Text(
               text,
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 12),
             ),
           ],
         ),

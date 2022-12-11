@@ -9,6 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:veterinary1/models/token.dart';
 import 'package:veterinary1/screens/login_screen.dart';
 import 'package:veterinary1/screens/procedimientos_screen.dart';
+import 'package:veterinary1/screens/brands_screen.dart';
 
 import 'package:whatsapp_unilink/whatsapp_unilink.dart';
 import 'Mascotas_screen.dart';
@@ -73,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Container(
                   height: 40,
                   width: 40,
-                  color: Colors.blue,
+                  color: Color.fromARGB(255, 93, 54, 138),
                   child: IconButton(
                     icon: Icon(
                       Icons.call,
@@ -140,12 +141,36 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           ListTile(
             leading: Icon(Icons.type_specimen),
+            title: const Text('Marcas'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => BrandsScreen(
+                            token: widget.token,
+                          )));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.type_specimen),
             title: const Text('Razas'),
             onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => RazasScreen(
+                            token: widget.token,
+                          )));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.precision_manufacturing),
+            title: const Text('Procedimientos'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ProcedimientosScreen(
                             token: widget.token,
                           )));
             },

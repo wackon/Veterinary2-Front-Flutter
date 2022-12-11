@@ -8,7 +8,6 @@ import 'package:veterinary1/models/brand.dart';
 import 'package:veterinary1/models/response.dart';
 import 'package:veterinary1/models/user.dart';
 
-import '../models/brand.dart';
 import '../models/raza.dart';
 
 import '../models/user.dart';
@@ -77,7 +76,7 @@ class ApiHelper {
     return Response(isSuccess: true, result: History.fromJson(decodedJson));
   } */
 
-  static Future<Response> getProcedures(Token token) async {
+  /*  static Future<Response> getProcedures(Token token) async {
     if (!_validToken(token)) {
       return Response(
           isSuccess: false,
@@ -101,7 +100,7 @@ class ApiHelper {
     }
 
     return Response(isSuccess: true, result: list);
-  }
+  } */
 
   static Future<Response> getProcedimientos(Token token) async {
     if (!_validToken(token)) {
@@ -137,7 +136,7 @@ class ApiHelper {
               'Sus credenciales se han vencido, por favor cierre sesión y vuelva a ingresar al sistema.');
     }
 
-    var url = Uri.parse('${Constans.apiUrl}/api/marcas');
+    var url = Uri.parse('${Constans.apiUrl}/api/procedimiento/');
     var response = await http.get(
       url,
       headers: {

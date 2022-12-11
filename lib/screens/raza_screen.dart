@@ -39,7 +39,7 @@ class _RazaScreenState extends State<RazaScreen> {
     return Scaffold(
       appBar: AppBar(
         title:
-            Text(widget.raza.id == 0 ? 'Nuevo raza' : widget.raza.descripcion),
+            Text(widget.raza.id == 0 ? 'Nueva raza' : widget.raza.descripcion),
       ),
       body: Stack(
         children: <Widget>[
@@ -66,7 +66,7 @@ class _RazaScreenState extends State<RazaScreen> {
         controller: _descriptionController,
         decoration: InputDecoration(
           hintText: 'Ingresa una raza...',
-          labelText: 'Descripción',
+          labelText: 'nombre de la raza',
           errorText: _descriptionShowError ? _descriptionError : null,
           suffixIcon: Icon(Icons.description),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),

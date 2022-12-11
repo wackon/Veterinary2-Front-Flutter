@@ -1,4 +1,4 @@
-/* import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 
@@ -73,8 +73,8 @@ class _ProcedimientoScreenState extends State<ProcedimientoScreen> {
       child: TextField(
         controller: _descriptionController,
         decoration: InputDecoration(
-          hintText: 'Ingresa una descripción...',
-          labelText: 'Descripción',
+          hintText: 'Ingresa un procedimiento...',
+          labelText: 'Procedimiento',
           errorText: _descriptionShowError ? _descriptionError : null,
           suffixIcon: Icon(Icons.description),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
@@ -213,7 +213,7 @@ class _ProcedimientoScreenState extends State<ProcedimientoScreen> {
     };
 
     Response response =
-        await ApiHelper.post('/api/procedimiento/', request, widget.token);
+        await ApiHelper.post('/api/procedimiento', request, widget.token);
 
     setState(() {
       _showLoader = false;
@@ -336,4 +336,3 @@ class _ProcedimientoScreenState extends State<ProcedimientoScreen> {
     Navigator.pop(context, 'yes');
   }
 }
- */

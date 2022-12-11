@@ -106,8 +106,8 @@ class _RazasScreenState extends State<RazasScreen> {
         margin: EdgeInsets.all(20),
         child: Text(
           _isFiltered
-              ? 'No hay marcas con ese criterio de búsqueda.'
-              : 'No hay marcas registradas.',
+              ? 'No hay razas con ese criterio de búsqueda.'
+              : 'No hay razas registradas.',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
       ),

@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Vehicles App',
+      title: 'Veterinary Clinic',
       home: _isLoading
           ? WaitScreen()
           : _showLoginPage

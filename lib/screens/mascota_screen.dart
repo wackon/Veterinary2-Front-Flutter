@@ -66,8 +66,8 @@ class _MascotaScreenState extends State<MascotaScreen> {
       child: TextField(
         controller: _nombreController,
         decoration: InputDecoration(
-          hintText: 'Ingresa una nombre...',
-          labelText: 'Descripción',
+          hintText: 'Ingresa un nombre...',
+          labelText: 'Nombre',
           errorText: _descriptionShowError ? _descriptionError : null,
           suffixIcon: Icon(Icons.description),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),

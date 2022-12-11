@@ -1,9 +1,7 @@
-/*  // ignore_for_file: depend_on_referenced_packages
-
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+/* import 'package:intl/intl.dart'; */
 
 import 'package:veterinary1/components/loader_component.dart';
 import 'package:veterinary1/helpers/api_helper.dart';
@@ -77,7 +75,7 @@ class _ProcedimientosScreenState extends State<ProcedimientosScreen> {
       return;
     }
 
-    Response response = await ApiHelper._getProcedimientos(widget.token);
+    Response response = await ApiHelper.getProcedimientos(widget.token);
 
     setState(() {
       _showLoader = false;
@@ -248,13 +246,12 @@ class _ProcedimientosScreenState extends State<ProcedimientosScreen> {
     String? result = await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => ProcedimientosScreen(
+            builder: (context) => ProcedimientoScreen(
                   token: widget.token,
-                  nombreProcedimiento: nombreProcedimiento,
+                  procedimiento: procedimiento,
                 )));
     if (result == 'yes') {
       _getProcedimientos();
     }
   }
 }
- */
