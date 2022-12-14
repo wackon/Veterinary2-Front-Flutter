@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:veterinary1/models/procedimiento.dart';
 import 'package:veterinary1/models/token.dart';
 
 import 'package:veterinary1/helpers/constans.dart';
@@ -42,7 +43,7 @@ class ApiHelper {
     var decodedJson = jsonDecode(body);
     if (decodedJson != null) {
       for (var item in decodedJson) {
-        list.add(Mascota.fromJson(item));
+        list.add(Mascota.fromJson(item.nombre));
       }
     }
 
@@ -116,13 +117,21 @@ class ApiHelper {
       headers: {
         'content-type': 'application/json',
         'accept': 'application/json',
-        'authorization': 'bearer ${token.token}',
+        'authorization': 'bearer $token',
       },
     );
 
     var body = response.body;
     if (response.statusCode >= 400) {
       return Response(isSuccess: false, message: body);
+    }
+
+    List<Procedimiento> list = [];
+    var decodedJson = jsonDecode(body);
+    if (decodedJson != null) {
+      for (var item in decodedJson) {
+        list.add(Procedimiento.fromJson(item));
+      }
     }
 
     return Response(isSuccess: true, result: list);

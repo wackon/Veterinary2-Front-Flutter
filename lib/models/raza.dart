@@ -12,7 +12,7 @@ class Raza {
 
   Raza.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    descripcion = json['descripcion'];
+    descripcion = json['descripción'];
     idMascota = json['idMascota'];
     mascota =
         json['mascota'] != null ? new Mascota.fromJson(json['mascota']) : null;
